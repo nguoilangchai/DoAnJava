@@ -15,7 +15,9 @@ public class QuanLySanPham extends javax.swing.JFrame {
         {
             {"SP01", "Nokia", "5", "2000000", "Trung Quoc", "20/02/2021"},
             {"SP02", "Sam Sung", "6", "3000000", "Viet Nam", "01/04/2020"},
-            {"SP03", "Huawei", "2", "5600000", "My", "03/12/2018"}     
+            {"SP03", "Huawei", "2", "5600000", "My", "03/12/2018"},
+            {"SP04", "Iphone", "2", "1000000", "Anh", "06/11/2018"}
+            
         };
         
         modelProducts = new DefaultTableModel(data, headers);
