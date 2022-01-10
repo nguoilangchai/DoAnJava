@@ -31,7 +31,7 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
     }
     public void initListTable() 
     {
-        String[] columnNames = new String[] {"Mã NV", "Tên NV","Tên KH","CMND","Tên điện thoại","Nơi sản xuất","Giá bán","Số lượng", "Ngày"};
+        String[] columnNames = new String[] {"Mã đơn hàng", "Mã NV" ,"Tên KH","CMND","Tên điện thoại","Nơi sản xuất","Giá bán","Số lượng", "Ngày", "Thành tiền"};
         tblModel = new DefaultTableModel();
         tblModel.setColumnIdentifiers(columnNames);
         tblBanHang.setModel(tblModel);
@@ -41,7 +41,14 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
     {
         try {
             Connection con = Database.openConnection();
-            String sql = "select * from DonHangTT";
+            String sql = "SELECT MaDH,nv.MaNV, kh.HoTen,kh.cmnd, sp.TenDT,sp.NhaCungCap,sp.GiaBan,dh.SoLuong,dh.Ngay,dh.ThanhTien\n" +
+"FROM DonHangTT dh \n" +
+"LEFT OUTER JOIN  NhanVienTT nv\n" +
+"ON dh.MaNV = nv.MaNV\n" +
+"LEFT OUTER JOIN KhachHang kh\n" +
+"ON dh.CMND = kh.CMND\n" +
+"LEFT OUTER JOIN SanPhamTT sp\n" +
+"ON dh.MaDT = sp.MaDT";
             PreparedStatement pstmt = con.prepareStatement(sql);
 
             ResultSet rs = pstmt.executeQuery();
@@ -49,19 +56,44 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
             tblModel.setRowCount(0);
             while(rs.next())
             {
+                String temp_maNV = rs.getString("MaNV");
+                if(rs.getString("MaNV") == null)
+                {
+                    temp_maNV = "NULL";
+                }
+                
+                String temp_hoten = rs.getString("Hoten") ;
+                String tempCMND = rs.getString("CMND");
+                
+                if(rs.getString("CMND") == null)
+                {
+                    temp_hoten = "NULL";
+                    tempCMND = "NULL";
+                }
+                
+                String tempTenDT = rs.getString("TenDT");
+                String tempNhaCungCap = rs.getString("NhaCungCap");
+                String tempGiaBan = rs.getString("GiaBan");
+                    
+                if(rs.getString("TenDT") == null)
+                {
+                    tempTenDT = "NULL";
+                    tempNhaCungCap = "NULL";
+                    tempGiaBan = "NULL";
+                }
+                
                 tblModel.addRow(new Object []
                 {
-                   
-                    rs.getString("manv"),
-                    rs.getString("hotennv"),
-                    rs.getString("cmnd"),
-                    rs.getString("HoTenKH"),
-                    rs.getString("TenDT"),
-                    rs.getString("NhaCungCap"),
-                    rs.getString("GiaBan"),
+                    rs.getString("MaDH"),
+                    temp_maNV,
+                    temp_hoten,
+                    tempCMND,
+                    tempTenDT,
+                    tempNhaCungCap,
+                    tempGiaBan,
                     rs.getString("SoLuong"),
                     getNgay(rs.getString("Ngay")),
-
+                    rs.getString("ThanhTien"),         
                 });
             }
             tblModel.fireTableDataChanged();
@@ -86,7 +118,7 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
         cbxCuaHang = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBanHang = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +144,13 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblBanHang);
 
+        btnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/nguoilangchai/slide4/demo/icon/Actions-edit-delete-icon-16.png"))); // NOI18N
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,7 +164,7 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
                         .addGap(34, 34, 34)
                         .addComponent(cbxCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(223, 223, 223)
-                        .addComponent(jButton1))
+                        .addComponent(btnExit))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 685, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -134,7 +173,7 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(cbxCuaHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -144,6 +183,7 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxCuaHangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxCuaHangItemStateChanged
@@ -151,11 +191,32 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
             String sql = "" ;
             Connection con = Database.openConnection();            
             if(cbxCuaHang.getSelectedItem().toString().compareTo("Cửa hàng 1") == 0)                 
-                sql = "select * from DonHangCH1";
+                sql = "SELECT MaDH,nv.MaNV, kh.HoTen,kh.cmnd, sp.TenDT,sp.NhaCungCap,sp.GiaBan,dh.SoLuong,dh.Ngay,dh.ThanhTien\n" +
+"FROM DonHangCH1 dh \n" +
+"LEFT OUTER JOIN  NhanVienTT nv\n" +
+"ON dh.MaNV = nv.MaNV\n" +
+"LEFT OUTER JOIN KhachHang kh\n" +
+"ON dh.CMND = kh.CMND\n" +
+"LEFT OUTER JOIN SanPhamTT sp\n" +
+"ON dh.MaDT = sp.MaDT";
             else if(cbxCuaHang.getSelectedItem().toString().compareTo("Cửa hàng 2") == 0)
-                sql = "select * from DonHangCH2";
+                sql = "SELECT MaDH,nv.MaNV, kh.HoTen,kh.cmnd, sp.TenDT,sp.NhaCungCap,sp.GiaBan,dh.SoLuong,dh.Ngay,dh.ThanhTien\n" +
+"FROM DonHangCH2 dh \n" +
+"LEFT OUTER JOIN  NhanVienTT nv\n" +
+"ON dh.MaNV = nv.MaNV\n" +
+"LEFT OUTER JOIN KhachHang kh\n" +
+"ON dh.CMND = kh.CMND\n" +
+"LEFT OUTER JOIN SanPhamTT sp\n" +
+"ON dh.MaDT = sp.MaDT";
             else
-                sql = "select * from DonHangTT";
+                sql = "SELECT MaDH,nv.MaNV, kh.HoTen,kh.cmnd, sp.TenDT,sp.NhaCungCap,sp.GiaBan,dh.SoLuong,dh.Ngay,dh.ThanhTien\n" +
+"FROM DonHangTT dh \n" +
+"LEFT OUTER JOIN  NhanVienTT nv\n" +
+"ON dh.MaNV = nv.MaNV\n" +
+"LEFT OUTER JOIN KhachHang kh\n" +
+"ON dh.CMND = kh.CMND\n" +
+"LEFT OUTER JOIN SanPhamTT sp\n" +
+"ON dh.MaDT = sp.MaDT";
             PreparedStatement pstmt = con.prepareStatement(sql);
             
             ResultSet rs = pstmt.executeQuery();
@@ -163,19 +224,45 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
             tblModel.setRowCount(0);
             while(rs.next())
             {                  
+                String temp_maNV = rs.getString("MaNV");
+                if(rs.getString("MaNV") == null)
+                {
+                    temp_maNV = "NULL";
+                }
+                
+                String temp_hoten = rs.getString("Hoten") ;
+                String tempCMND = rs.getString("CMND");
+                
+                if(rs.getString("CMND") == null)
+                {
+                    temp_hoten = "NULL";
+                    tempCMND = "NULL";
+                }
+                
+                String tempTenDT = rs.getString("TenDT");
+                String tempNhaCungCap = rs.getString("NhaCungCap");
+                String tempGiaBan = rs.getString("GiaBan");
+                    
+                if(rs.getString("TenDT") == null)
+                {
+                    tempTenDT = "NULL";
+                    tempNhaCungCap = "NULL";
+                    tempGiaBan = "NULL";
+                }
+                
                 tblModel.addRow(new Object []
                 {
-                   
-                    rs.getString("manv"),
-                    rs.getString("hotennv"),
-                    rs.getString("cmnd"),
-                    rs.getString("HoTenKH"),
-                    rs.getString("TenDT"),
-                    rs.getString("NhaCungCap"),
-                    rs.getString("GiaBan"),
+                    rs.getString("MaDH"),
+                    temp_maNV,
+                    temp_hoten,
+                    tempCMND,
+                    tempTenDT,
+                    tempNhaCungCap,
+                    tempGiaBan,
                     rs.getString("SoLuong"),
                     getNgay(rs.getString("Ngay")),
-                });    
+                    rs.getString("ThanhTien"),         
+                });   
             }
             tblModel.fireTableDataChanged();
             }
@@ -185,6 +272,11 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_cbxCuaHangItemStateChanged
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.dispose();
+        new TrungTamForm().setVisible(true);
+    }//GEN-LAST:event_btnExitActionPerformed
 
 
     public static void main(String args[]) {
@@ -197,8 +289,8 @@ public class QuanLyBanHangForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JComboBox<String> cbxCuaHang;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBanHang;

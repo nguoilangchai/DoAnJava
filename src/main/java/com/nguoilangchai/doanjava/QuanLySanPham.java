@@ -822,6 +822,7 @@ try {
 
     private void btnOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOutActionPerformed
         this.dispose();
+        new TrungTamForm().setVisible(true);
     }//GEN-LAST:event_btnOutActionPerformed
 
     public static void main(String args[]) {

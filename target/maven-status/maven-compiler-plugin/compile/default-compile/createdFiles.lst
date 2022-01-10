@@ -5,7 +5,7 @@ com\nguoilangchai\doanjava\KhachHang$7.class
 com\nguoilangchai\doanjava\QuanLySanPham$1.class
 com\nguoilangchai\doanjava\TrungTamForm$5.class
 com\nguoilangchai\doanjava\QuanLySanPham$11.class
-com\nguoilangchai\doanjava\QuanLyNhanVien$10.class
+com\nguoilangchai\doanjava\BanHang$11.class
 com\nguoilangchai\doanjava\BanHang$3.class
 com\nguoilangchai\doanjava\TrungTamForm$2.class
 com\nguoilangchai\doanjava\KhachHang$1.class
@@ -54,6 +54,7 @@ com\nguoilangchai\doanjava\database\DienThoaiDao.class
 com\nguoilangchai\doanjava\TaiKhoanForm.class
 com\nguoilangchai\doanjava\DangNhap.class
 com\nguoilangchai\doanjava\QuanLyNhanVien$2.class
+com\nguoilangchai\doanjava\QuanLyBanHangForm$3.class
 com\nguoilangchai\doanjava\TrungTamForm$3.class
 com\nguoilangchai\doanjava\QuanLyBanHangForm.class
 com\nguoilangchai\doanjava\KhachHang$2.class
@@ -62,6 +63,7 @@ com\nguoilangchai\doanjava\QuanLySanPham$3.class
 com\nguoilangchai\doanjava\QuanLyNhanVien$8.class
 com\nguoilangchai\doanjava\QuanLySanPham$10.class
 com\nguoilangchai\doanjava\QuanLyNhanVien$1.class
+com\nguoilangchai\doanjava\BanHang$12.class
 com\nguoilangchai\doanjava\KhachHang$3.class
 com\nguoilangchai\doanjava\DangNhap$5.class
 com\nguoilangchai\doanjava\QuanLyBanHangForm$2.class
