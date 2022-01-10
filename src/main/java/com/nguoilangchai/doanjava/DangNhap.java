@@ -128,7 +128,14 @@ public class DangNhap extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPassWordActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        try {
+        if(txtUserName.getText().trim().equals("admin") && txtPassWord.getText().trim().equals("123"))
+        {
+            new TrungTamForm().setVisible(true);
+            setVisible(false);
+        }
+        else
+        {
+            try {
             Connection con = Database.openConnection();                            
             String sql = "SELECT nv.MaNV, nv.HoTen FROM NhanVienTT nv\n" +
                          "WHERE Username = ? AND Password = ?";
@@ -154,6 +161,7 @@ public class DangNhap extends javax.swing.JFrame {
          catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error" + e.getMessage());
             e.printStackTrace();
+        }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

@@ -270,13 +270,14 @@ public class KhachHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnLayDuLieuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLayDuLieuActionPerformed
-        if(txtHoTen.equals("") || txtCMND.equals(""))
+        if(txtHoTen.getText().trim().equals("") || txtCMND.getText().trim().equals(""))
         {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 khách hàng");
             return;
         }
         tempHoTen = txtHoTen.getText().trim();
         tempCMND = txtCMND.getText().trim();
+        
         JOptionPane.showMessageDialog(this, "Lấy dữ liệu thành công");
     }//GEN-LAST:event_btnLayDuLieuActionPerformed
 
