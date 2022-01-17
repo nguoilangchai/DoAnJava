@@ -4,6 +4,12 @@ package com.nguoilangchai.doanjava;
 import static com.nguoilangchai.doanjava.DangNhap.a;
 import static com.nguoilangchai.doanjava.DangNhap.b;
 import com.nguoilangchai.doanjava.database.Database;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -473,10 +479,9 @@ public class BanHang extends javax.swing.JFrame {
             ResultSet rs = pstmt.executeQuery();
             
             if(rs.next())
-            {        
-                
-                txtHoTenKH.setText(rs.getString("CMND"));
-                txtCMNDKH.setText(rs.getString("Hoten"));
+            {                   
+                txtCMNDKH.setText(rs.getString("CMND"));
+                txtHoTenKH.setText(rs.getString("Hoten"));
             }
             else
                 JOptionPane.showMessageDialog(this, "Không tìm thấy");
@@ -617,6 +622,29 @@ public class BanHang extends javax.swing.JFrame {
             t_pstmt.setString(5, txtSoLuongBan.getText().trim());
             t_pstmt.setString(7, txtThanhTien.getText());
             
+            String tempNgayBanhd=  t_ngay + "/" +  t_thang +"/"+  txtNam.getText();
+            Path logFile = Paths.get("C:\\Users\\admin\\Desktop\\hoadon.txt");
+            try (BufferedWriter writer = Files.newBufferedWriter(logFile, StandardCharsets.UTF_8)) 
+            {
+                String temp_TenDT = tblDienthoai.getValueAt(r, 1).toString();
+                String temp_DonGia = tblDienthoai.getValueAt(r, 5).toString();
+                
+                writer.write("      ------Hóa đơn thanh toán-------");
+                writer.write("\n               " + tempNgayBanhd);
+                writer.write("\nMã đơn hàng : " + txtMaDH.getText());
+                writer.write("\nMã nhân viên : " + txtMaNV.getText());
+                writer.write("\nTên nhân viên : " + txtHoTen.getText());
+                writer.write("\n\nCMND Khách hàng : " + txtCMNDKH.getText());
+                writer.write("\nHọ tên khách hàng : " + txtHoTenKH.getText());
+                writer.write("\n\nTên điện thoại : " + temp_TenDT);
+                writer.write("\nGiá : " + temp_DonGia);
+                writer.write("\nSố lượng : " + txtSoLuongBan.getText());
+                writer.write("\nThành tiền: " + txtThanhTien.getText());
+                writer.write("\n    ------Hẹn gặp lại quý khách------");
+                
+                writer.close();
+                
+            } catch (Exception e) {}
             
             if(pstmt.executeUpdate() > 0 && t_pstmt.executeUpdate() > 0 
             && pstmt1.executeUpdate() > 0 && t_pstmt2.executeUpdate() > 0)         
@@ -625,6 +653,7 @@ public class BanHang extends javax.swing.JFrame {
             }   
             else
                 JOptionPane.showMessageDialog(this, "Thanh toán thất bại");
+         
             
             getData();
         } catch (Exception e) {
