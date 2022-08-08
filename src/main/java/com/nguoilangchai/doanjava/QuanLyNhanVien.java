@@ -602,6 +602,8 @@ public class QuanLyNhanVien extends javax.swing.JFrame
             String tempNgayVaoLam = txtNamVaoLam.getText() + t_thang + t_ngay;
             
             emp.setNgayVaoLam(tempNgayVaoLam.trim());
+            
+            //set username la maNV
             emp.setUserName((t + txtMaNV.getText().trim()).toLowerCase());
             
             EmployeeDao dao = new EmployeeDao();

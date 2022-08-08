@@ -80,8 +80,8 @@ public class BanHang extends javax.swing.JFrame {
     }
     private void setCuaHang()
     {
-        txtMaNV.setText(DangNhap.a);
-        txtHoTen.setText(DangNhap.b);
+        txtMaNV.setText(DangNhap.a);// a la manv
+        txtHoTen.setText(DangNhap.b);//b la ho ten
         
         if(init_CuaHang(init_CuaHang(DangNhap.a)).equals("CH1"))
             txtCuaHang.setText("CỬA HÀNG 1");
@@ -606,6 +606,7 @@ public class BanHang extends javax.swing.JFrame {
             pstmt.setString(6, tempNgayBan);
             pstmt.setString(5, txtSoLuongBan.getText().trim());
             pstmt.setString(7, txtThanhTien.getText());
+            
             pstmt1.setString(1, "" + temp_soLuongConLai);
             pstmt1.setString(2, temp_maSP.trim());
             
