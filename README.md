@@ -6,7 +6,31 @@
 * ...
 
 ### Screen shot:
-- Home-image :
+
+- ManageProduct :
 <space><space>
-![home-image](https://github.com/nguoilangchai/Project_banhang/blob/main/images/Home.PNG)
+![ManageProduct-image](https://github.com/nguoilangchai/DoAnJava/blob/main/images/ManageProduct.PNG)
+<space><space>
+
+- ManageEmployee :
+<space><space>
+![ManageEmployee-image](https://github.com/nguoilangchai/DoAnJava/blob/main/images/ManageEmployee.PNG)
+<space><space>
+
+- ManageAccount :
+<space><space>
+![ManageAccount-image](
+https://github.com/nguoilangchai/DoAnJava/blob/main/images/ManageAccount.PNG)
+<space><space>
+
+- SaleScreen :
+<space><space>
+![SaleScreen-image](
+https://github.com/nguoilangchai/DoAnJava/blob/main/images/SaleScreen.PNG)
+<space><space>
+
+- ListOrder :
+<space><space>
+![ListOrder-image](
+https://github.com/nguoilangchai/DoAnJava/blob/main/images/ListOrder.PNG)
 <space><space>
